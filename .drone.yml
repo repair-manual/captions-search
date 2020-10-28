@@ -54,10 +54,8 @@ steps:
   pull: if-not-exists
   commands:
   - minify --recursive --verbose --output /drone/src/ /drone/src/
-  when:
-    event:
-    - push
-    target:
+  trigger:
+    branch:
     - master
 
 - name: Delete development files
@@ -67,10 +65,8 @@ steps:
   - rm -rf composer.json composer.lock
   - rm -rf .gitignore uploads
   - rm -rf .drone.yml
-  when:
-    event:
-    - push
-    target:
+  trigger:
+    branch:
     - master
 
 - name: Transfer Source
@@ -88,11 +84,9 @@ steps:
       - '.*'
     target: '/var/www/products/repair-caption-search.zierhut-it.de/.prod'
     rm: true
-  when:
-    event:
-    - push
-    target:
-    - master
+    trigger:
+      branch:
+      - master
 
 - name: Activate Source
   image: appleboy/drone-ssh
@@ -112,29 +106,25 @@ steps:
       - chown -R www-data prod/
       - rm -rf .prod_tmp/
       - rm -rf .prod/
-  when:
-    event:
-    - push
-    target:
-    - master
+    trigger:
+      branch:
+      - master
 
 - name: Import the captions
   image: appleboy/drone-ssh
   pull: if-not-exists
   settings:
     host:
-    from_secret: scp_host
+        from_secret: scp_host
     user: 
-    from_secret: scp_user
+        from_secret: scp_user
     password:
-    from_secret: scp_password
+        from_secret: scp_password
     script:
     - cd /var/www/products/repair-caption-search.zierhut-it.de/data
     - git pull
     - cd ../prod
     - php import.php
-  when:
-    event:
-    - push
-    target:
-    - master
+    trigger:
+        branch:
+        - master
