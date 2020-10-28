@@ -118,30 +118,6 @@ steps:
     target:
     - master
 
-- name: Activate Source
-  image: appleboy/drone-ssh
-  pull: if-not-exists
-  settings:
-    host:
-      from_secret: scp_host
-    user: 
-      from_secret: scp_user
-    password:
-      from_secret: scp_password
-    script:
-      - cd /var/www/products/repair-caption-search.zierhut-it.de/
-      - mv prod/ .prod_tmp/
-      - mv .prod_tmp/z_config/z_settings.ini .prod/z_config/z_settings.ini 
-      - mv .prod/ prod/
-      - chown -R www-data prod/
-      - rm -rf .prod_tmp/
-      - rm -rf .prod/
-  when:
-    event:
-    - push
-    target:
-    - master
-
 - name: Import the captions
   image: appleboy/drone-ssh
   pull: if-not-exists
