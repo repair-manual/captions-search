@@ -6,6 +6,9 @@
         }
 
         public function action_import(Request $req, Response $res) {
+            global $argc;
+            if ($argc == 0) return;
+            
             $data = [];
             foreach(scandir('data/captions') as $file) {
                 if(in_array($file, [".", ".."])) continue;
@@ -37,6 +40,6 @@
                 $counter++;
             }
         }
- 
+
     }
 ?>
