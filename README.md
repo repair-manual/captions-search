@@ -16,6 +16,11 @@ Please take a look at <a href="https://docs.zubzet.de/0.10.x/">this</a> document
 - Change the settings in z_config/z_settings to your liking. (**Don't** push those if they include actual secrets)
 - Always check out to a new branch before creating a pull request. Please name them like `feature/some-new-stuff`
 
+## Deployment
+- Every change is automatically mirrored to <a href="https://git.zierhut-it.de/repair-manual/captions-search">this</a> repository.
+- The self-hosted drone CI and it's build logs can be found <a href="https://drone.zierhut-it.de/repair-manual/captions-search">here</a>.
+- Please use [skip ci] in your commit message when changing files like the README.
+
 ## Contact
 Hit me up on discord ALZlper#7355<br>
 Email: alex (at) zierhut-it (dot) de
