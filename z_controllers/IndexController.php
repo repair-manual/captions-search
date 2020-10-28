@@ -10,7 +10,7 @@
             if ($argc == 0) return;
             
             $data = [];
-            $path = $req->getBooterSettings("captions_folder").'captions';
+            $path = $req->getBooterSettings("captions_folder").'captions/';
             foreach(scandir($path) as $file) {
                 if(in_array($file, [".", ".."])) continue;
                 $id = explode(".", $file)[0];
