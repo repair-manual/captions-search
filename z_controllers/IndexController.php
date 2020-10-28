@@ -10,10 +10,11 @@
             if ($argc == 0) return;
             
             $data = [];
-            foreach(scandir('data/captions') as $file) {
+            $path = $req->getBooterSettings("captions_folder").'captions';
+            foreach(scandir($path) as $file) {
                 if(in_array($file, [".", ".."])) continue;
                 $id = explode(".", $file)[0];
-                $file = file_get_contents("data/captions/$file");
+                $file = file_get_contents($path.$file);
                 $file = explode("\n", $file);
                 unset($file[0]);
                 $tmp = [];

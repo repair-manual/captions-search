@@ -7,6 +7,8 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
+    chdir(__DIR__);
+    require_once "vendor/autoload.php";
     require_once "z_framework/main.php";
 
     //z_framework init

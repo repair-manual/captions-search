@@ -1,0 +1,164 @@
+kind: pipeline
+name: Installation
+
+# Configuration
+volumes:
+  - name: cache
+    host: 
+      path: /tmp/cache
+
+steps:
+
+# Restore cache
+- name: Restore Installation Cache
+  image: drillster/drone-volume-cache
+  pull: if-not-exists
+  volumes:
+  - name: cache
+    path: /cache
+  settings:
+    restore: true
+    mount:
+    - vendor
+
+# Installation
+- name: Adding Submodules
+  image: zierhutit/drone-git-submodules
+  pull: if-not-exists
+  environment:
+    SSH_KEY:
+      from_secret: z_framework_ssh_key
+  commands:
+    - git submodule update --init z_framework 
+- name: Install Composer Packages
+  image: composer
+  pull: if-not-exists
+  commands:
+    - composer --ignore-platform-reqs install 
+
+# Rebuild cache
+- name: Build Installation Cache
+  image: drillster/drone-volume-cache
+  pull: if-not-exists
+  volumes:
+  - name: cache
+    path: /cache
+  settings:
+    rebuild: true
+    mount:
+    - vendor
+ 
+# Deployment
+- name: Minify code
+  image: thekevjames/minify
+  pull: if-not-exists
+  commands:
+  - minify --recursive --verbose --output /drone/src/ /drone/src/
+  when:
+    event:
+    - push
+    target:
+    - master
+
+- name: Delete development files
+  image: alpine
+  pull: if-not-exists
+  commands:
+  - rm -rf composer.json composer.lock
+  - rm -rf .gitignore uploads
+  - rm -rf .drone.yml
+  when:
+    event:
+    - push
+    target:
+    - master
+
+- name: Transfer Source
+  image: appleboy/drone-scp
+  pull: if-not-exists
+  settings: 
+    host:
+      from_secret: scp_host
+    user: 
+      from_secret: scp_user
+    password:
+      from_secret: scp_password
+    source: 
+      - '*'
+      - '.*'
+    target: '/var/www/products/repair-caption-search.zierhut-it.de/.prod'
+    rm: true
+  when:
+    event:
+    - push
+    target:
+    - master
+
+- name: Activate Source
+  image: appleboy/drone-ssh
+  pull: if-not-exists
+  settings:
+    host:
+      from_secret: scp_host
+    user: 
+      from_secret: scp_user
+    password:
+      from_secret: scp_password
+    script:
+      - cd /var/www/products/repair-caption-search.zierhut-it.de/
+      - mv prod/ .prod_tmp/
+      - mv .prod_tmp/z_config/z_settings.ini .prod/z_config/z_settings.ini 
+      - mv .prod/ prod/
+      - chown -R www-data prod/
+      - rm -rf .prod_tmp/
+      - rm -rf .prod/
+  when:
+    event:
+    - push
+    target:
+    - master
+
+- name: Activate Source
+  image: appleboy/drone-ssh
+  pull: if-not-exists
+  settings:
+    host:
+      from_secret: scp_host
+    user: 
+      from_secret: scp_user
+    password:
+      from_secret: scp_password
+    script:
+      - cd /var/www/products/repair-caption-search.zierhut-it.de/
+      - mv prod/ .prod_tmp/
+      - mv .prod_tmp/z_config/z_settings.ini .prod/z_config/z_settings.ini 
+      - mv .prod/ prod/
+      - chown -R www-data prod/
+      - rm -rf .prod_tmp/
+      - rm -rf .prod/
+  when:
+    event:
+    - push
+    target:
+    - master
+
+- name: Activate Source
+  image: appleboy/drone-ssh
+  pull: if-not-exists
+  settings:
+    host:
+    from_secret: scp_host
+    user: 
+    from_secret: scp_user
+    password:
+    from_secret: scp_password
+    script:
+    - cd /var/www/products/repair-caption-search.zierhut-it.de/data
+    - git pull
+    - cd ../prod
+    - php import.php
+  when:
+    event:
+    - push
+    target:
+    - master
