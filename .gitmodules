@@ -1,3 +1,9 @@
 [submodule "z_framework"]
 	path = z_framework
 	url = https://git.zierhut-it.de/ZubZet/framework.git
+[submodule "captions"]
+	path = captions
+	url = https://github.com/repair-manual/youtube-captions.git
+[submodule "data"]
+	path = data
+	url = https://github.com/repair-manual/youtube-captions.git
