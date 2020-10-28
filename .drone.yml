@@ -30,11 +30,12 @@ steps:
       from_secret: z_framework_ssh_key
   commands:
     - git submodule update --init z_framework 
-- name: Install Composer Packages
-  image: composer
-  pull: if-not-exists
-  commands:
-    - composer --ignore-platform-reqs install 
+    
+# - name: Install Composer Packages
+#   image: composer
+#   pull: if-not-exists
+#   commands:
+#     - composer --ignore-platform-reqs install 
 
 # Rebuild cache
 - name: Build Installation Cache
