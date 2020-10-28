@@ -9,6 +9,13 @@ If you found and error while using this search. Please change it <a href="https:
 ## Codebase documentation
 Please take a look at <a href="https://docs.zubzet.de/0.10.x/">this</a> documentation.
 
+## How to setup and change stuff
+- Clone this repository and it's submodules: `git clone --recurse-submodules https://github.com/repair-manual/captions-search.git /var/www/html/rrr_search`
+- Be sure to use apache2. Otherwise you'll have to rewrite the .htaccess file
+- Import the latest SQL_Dump into MariaDB or equivalent
+- Change the settings in z_config/z_settings to your liking. (**Don't** push those if they include actual secrets)
+- Always check out to a new branch before creating a pull request. Please name them like `feature/some-new-stuff`
+
 ## Contact
 Hit me up on discord ALZlper#7355<br>
 Email: alex (at) zierhut-it (dot) de
