@@ -142,7 +142,7 @@ steps:
     target:
     - master
 
-- name: Activate Source
+- name: Import the captions
   image: appleboy/drone-ssh
   pull: if-not-exists
   settings:
