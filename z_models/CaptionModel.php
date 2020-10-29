@@ -1,7 +1,5 @@
 <?php
-
     class CaptionModel extends z_model {
-
         public function addCaption($caption, $timestamp, $videoId) {
             if(strlen($timestamp) > 20) {
                 echo "$timestamp\n";
@@ -29,5 +27,4 @@
             return $this->exec($sql, "s", $videoId)->resultToArray();
         }
     }
-
 ?>
