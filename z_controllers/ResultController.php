@@ -22,15 +22,10 @@
                 unset($results[$i]);
             }
 
-            $pagination = [
-                1,
-                $results["pages"]
-            ];
-            $pagination[] = $currentPage;
-            $pagination[] = $currentPage + 1;
-            $pagination[] = $currentPage + 2;
-            $pagination[] = $currentPage - 1;
-            $pagination[] = $currentPage - 2;
+            $pagination = array_merge(
+                [1, $results["pages"]],
+                range($currentPage - 2, $currentPage + 2)
+            );
 
             $pagination = array_unique($pagination);
             $pagination = array_filter($pagination, function($page) use ($results) {
