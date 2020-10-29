@@ -23,6 +23,11 @@
             $this->exec($sql, "ss", $timestamp, $videoId);
             return $this->countResults() > 0;
         }
+
+        public function getByVideoId($videoId) {
+            $sql = "SELECT * FROM `caption` WHERE `videoId`=?";
+            return $this->exec($sql, "s", $videoId)->resultToArray();
+        }
     }
 
 ?>

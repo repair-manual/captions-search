@@ -58,7 +58,7 @@
                 $('#results').html("loading...");
                 $('#results').slideDown(50);
                 $.ajax({
-                    url: Z.Request.rootPath+"result/?query="+query,
+                    url: Z.Request.rootPath+"result/?query="+query+"&page="+page,
                     success: (res) => {
                         $("#results").html(res);
                         $('#results').hide();

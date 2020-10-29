@@ -2,35 +2,46 @@
     class ResultController extends z_controller {
 
         public function action_index(Request $req, Response $res) {
-            $query = $req->getGet("query");
-            $query = explode(" ", $query);
+            $currentPage = $req->getGet("page");
 
-            $results = [];
-            foreach($query as $keyword) {
-                if(strlen($keyword) < 2) continue;
-                $captions = $req->getModel("Search")->query($keyword);
-                foreach($captions as $caption) {
-                    if(!isset($results[$caption["videoId"]])) {
-                        $results[$caption["videoId"]] = [];
-                    }
-                    $results[$caption["videoId"]][] = $caption;
+            $results = $req->getModel("Search")->query(
+                $req->getGet("query"),
+                $currentPage
+            );
+
+            $mergedResult = [];
+            foreach($results["data"] as $i => $result) {
+                if(!isset($mergedResult[$result["videoId"]])) {
+                    $mergedResult[$result["videoId"]] = [
+                        "videoId" => $result["videoId"],
+                        "title" => $result["title"],
+                        "captions" => []
+                    ];
                 }
+                $mergedResult[$result["videoId"]]["captions"][] = $result;
+                unset($results[$i]);
             }
 
-            usort($results, function($a, $b) {
-                return count($b) <=> count($a);
+            $pagination = [
+                1,
+                $results["pages"]
+            ];
+            $pagination[] = $currentPage;
+            $pagination[] = $currentPage + 1;
+            $pagination[] = $currentPage + 2;
+            $pagination[] = $currentPage - 1;
+            $pagination[] = $currentPage - 2;
+
+            $pagination = array_unique($pagination);
+            $pagination = array_filter($pagination, function($page) use ($results) {
+                return $page > 0 && $page <= $results["pages"];
             });
+            sort($pagination);
 
             $res->render("result.php", [
-                "results" => $results,
-                "tsConvert" => function($ts) {
-                    if(substr_count($ts, ":") == 1) {
-                        $ts = "00:$ts";
-                    }
-                    $ts = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $ts);
-                    sscanf($ts, "%d:%d:%d", $hours, $minutes, $seconds);
-                    return $hours * 3600 + $minutes * 60 + $seconds;
-                }
+                "results" => $mergedResult,
+                "pagination" => $pagination,
+                "current_page" => $currentPage
             ], "layout/empty.php");
         }
  
