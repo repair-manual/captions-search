@@ -15,26 +15,13 @@
                             <img class="img-thumbnail" src="https://img.youtube.com/vi/<?= $result["videoId"] ?>/mqdefault.jpg">
                         </div>
                         <div class="col-12 col-md-6">
-                            <?php $resultCount = count($result) - 1; ?>
                             <?php foreach($result["captions"] as $i => $caption) { ?>
-                                <?php if($i == 5) { ?>
-                                    <div onclick="$('#<?= $result["videoId"]."-".$i ?>').toggle();" style="cursor: pointer;">
-                                        <i class="fa fa-caret-down"></i>
-                                        Show more
-                                    </div>
-                                    <div style="display: none;" id="<?= $result["videoId"]."-".$i ?>">
-                                <?php } ?>
-
                                 <div>
                                     <?= $caption["timestamp"]; ?>
                                     <a href="https://youtu.be/<?= $caption["videoId"]; ?>?t=<?= $caption["time"] ?>" target="_blank">
                                         <?= $caption["caption"]; ?>
                                     </a>
                                 </div>
-
-                                <?php if($i == $resultCount) { ?>
-                                    </div>
-                                <?php } ?>
                             <?php } ?>
                         </div>
                     </div>
