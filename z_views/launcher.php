@@ -5,7 +5,7 @@
     <div class="container mt-4">
         <div class="card-deck mb-3">
             <!-- SEARCH -->
-            <div class="card">
+            <div class="card shadow">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <h5 class="mb-0 mt-1">
@@ -46,7 +46,7 @@
             </div>
 
             <!-- EDITOR -->
-            <div class="card">
+            <div class="card shadow">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <h5 class="mb-0 mt-1">
@@ -88,7 +88,7 @@
         </div>
         <div class="card-deck">
             <!-- WIKI -->
-            <div class="card">
+            <div class="card shadow">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <h5 class="mb-0 mt-1">
