@@ -9,42 +9,12 @@ volumes:
 
 steps:
 
-# Restore cache
-- name: Restore Installation Cache
-  image: drillster/drone-volume-cache
-  pull: if-not-exists
-  volumes:
-  - name: cache
-    path: /cache
-  settings:
-    restore: true
-    mount:
-    - vendor
-
 # Installation
 - name: Adding Submodules
   image: zierhutit/drone-git-submodules
   pull: if-not-exists
   commands:
     - git submodule update --init z_framework 
-
-# - name: Install Composer Packages
-#   image: composer
-#   pull: if-not-exists
-#   commands:
-#     - composer --ignore-platform-reqs install 
-
-# Rebuild cache
-- name: Build Installation Cache
-  image: drillster/drone-volume-cache
-  pull: if-not-exists
-  volumes:
-  - name: cache
-    path: /cache
-  settings:
-    rebuild: true
-    mount:
-    - vendor
  
 # Deployment
 - name: Minify code
@@ -100,6 +70,7 @@ steps:
       - cd /var/www/products/repair-caption-search.zierhut-it.de/
       - mv prod/ .prod_tmp/
       - mv .prod_tmp/z_config/z_settings.ini .prod/z_config/z_settings.ini 
+      - mv .prod_tmp/editor .prod
       - mv .prod/ prod/
       - chown -R www-data prod/
       - rm -rf .prod_tmp/
