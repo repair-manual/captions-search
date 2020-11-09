@@ -3,7 +3,8 @@
 <?php }, "body" => function($opt) { ?> 
 
     <div class="container mt-4">
-        <div class="card-deck">
+        <div class="card-deck mb-3">
+            <!-- SEARCH -->
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
@@ -43,6 +44,8 @@
                     </a>
                 </div>
             </div>
+
+            <!-- EDITOR -->
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
@@ -79,6 +82,43 @@
                     Made by 
                     <a href="https://github.com/KararTY" target="_blank">
                         Karar Al-Remahy
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-deck">
+            <!-- WIKI -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="mb-0 mt-1">
+                            <i class="fa fa-book mr-1"></i> 
+                            The Wiki
+                        </h5>
+                        <a href="https://wiki2.rossmanngroup.com/" target="blank" class="d-none d-md-block btn btn-sm btn-outline-primary">
+                            <i class="fa fa-external-link mr-1"></i>
+                            Open the wiki
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="https://wiki2.rossmanngroup.com/" target="blank" class="d-block d-md-none mb-2 btn btn-sm btn-outline-primary">
+                        <i class="fa fa-external-link mr-1"></i>
+                        Open the wiki
+                    </a>
+                    <p class="card-text">
+                        The wiki is a place to learn about repair as well as
+                        share and document your knowledge with others. It contains
+                        detailed guidelines regarding problems encountered while
+                        fixing devices as well as standards on meta topics like
+                        customer service.
+                    </p>
+                </div>
+                <div class="card-footer text-muted">
+                    Discussions are being had on 
+                    <a href="https://github.com/repair-manual/discussion/projects/1" target="_blank">
+                        <i class="fa fa-github"></i>
+                        Github
                     </a>
                 </div>
             </div>
