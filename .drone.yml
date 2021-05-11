@@ -50,7 +50,7 @@ steps:
     source: 
       - '*'
       - '.*'
-    target: '/var/www/products/repair-caption-search.zierhut-it.de/.prod'
+    target: '/var/www/products/tools.repair.wiki/.prod'
     rm: true
     trigger:
       branch:
@@ -67,12 +67,12 @@ steps:
     password:
       from_secret: scp_password
     script:
-      - cd /var/www/products/repair-caption-search.zierhut-it.de/
+      - cd /var/www/tools.repair.wiki/
       - mv prod/ .prod_tmp/
       - mv .prod_tmp/z_config/z_settings.ini .prod/z_config/z_settings.ini 
       - mv .prod_tmp/editor .prod
       - mv .prod/ prod/
-      - chown -R www-data prod/
+      - sudo chown -R www-data prod/
       - rm -rf .prod_tmp/
       - rm -rf .prod/
     trigger:
