@@ -45,8 +45,8 @@ steps:
       from_secret: scp_host
     user: 
       from_secret: scp_user
-    password:
-      from_secret: scp_password
+    key:
+      from_secret: scp_key
     source: 
       - '*'
       - '.*'
@@ -64,8 +64,8 @@ steps:
       from_secret: scp_host
     user: 
       from_secret: scp_user
-    password:
-      from_secret: scp_password
+    key:
+      from_secret: scp_key
     script:
       - cd /var/www/tools.repair.wiki/
       - mv prod/ .prod_tmp/
