@@ -12,6 +12,6 @@
 
     //z_framework init
     $z_framework = new z_framework();
-    $z_framework->execute(["index", "import"]);
+    $z_framework->execute(["search", "import"]);
 
 ?>
