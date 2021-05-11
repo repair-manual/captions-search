@@ -68,13 +68,13 @@ steps:
       from_secret: scp_key
     script:
       - cd /var/www/tools.repair.wiki/
-      - mv prod/ .prod_tmp/
-      - mv .prod_tmp/z_config/z_settings.ini .prod/z_config/z_settings.ini 
-      - mv .prod_tmp/editor .prod
-      - mv .prod/ prod/
+      - sudo mv prod/ .prod_tmp/
+      - sudo mv .prod_tmp/z_config/z_settings.ini .prod/z_config/z_settings.ini 
+      - sudo mv .prod_tmp/editor .prod
+      - sudo mv .prod/ prod/
       - sudo chown -R www-data prod/
-      - rm -rf .prod_tmp/
-      - rm -rf .prod/
+      - sudo rm -rf .prod_tmp/
+      - sudo rm -rf .prod/
     trigger:
       branch:
       - master
